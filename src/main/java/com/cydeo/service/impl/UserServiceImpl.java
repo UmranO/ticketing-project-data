@@ -36,10 +36,12 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+
     @Override
     public void save(UserDTO user) {
-
+        userRepository.save(userMapper.convertToEntity(user));
     }
+
 
     @Override
     public void deleteByUserName(String username) {
