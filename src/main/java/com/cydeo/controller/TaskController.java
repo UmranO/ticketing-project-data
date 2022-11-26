@@ -108,35 +108,33 @@ public String updateTask(@ModelAttribute("task") TaskDTO task, BindingResult bin
         return "/task/archive";
     }
 
-//    @GetMapping("/employee/edit/{id}")
-//    public String employeeEditTask(@PathVariable Long id, Model model) {
-//
-//        model.addAttribute("task", taskService.findById(id));
-////        model.addAttribute("projects", projectService.findAll());
-////        model.addAttribute("employees", userService.findEmployees());
-//        model.addAttribute("statuses", Status.values());
-//        model.addAttribute("tasks", taskService.findAllTasksByStatusIsNot(Status.COMPLETE));
-//
-//        return "/task/status-update";
-//
-//    }
-//
-//    @PostMapping("/employee/update/{id}")
-//    public String employeeUpdateTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
-//
-//        if (bindingResult.hasErrors()) {
-//
-//            model.addAttribute("statuses", Status.values());
-//            model.addAttribute("tasks", taskService.findAllTasksByStatusIsNot(Status.COMPLETE));
-//
-//            return "/task/status-update";
-//
-//        }
-//
-//        taskService.updateStatus(task);
-//
-//        return "redirect:/task/employee/pending-tasks";
-//
+    @GetMapping("/employee/edit/{id}")
+    public String employeeEditTask(@PathVariable Long id, Model model) {
+
+        model.addAttribute("task", taskService.findById(id));
+        model.addAttribute("statuses", Status.values());
+        model.addAttribute("tasks", taskService.listAllTasksByStatusIsNot(Status.COMPLETE));
+
+        return "/task/status-update";
+
+    }
+
+    @PostMapping("/employee/update/{id}")
+    public String employeeUpdateTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("statuses", Status.values());
+            model.addAttribute("tasks", taskService.listAllTasksByStatusIsNot(Status.COMPLETE));
+
+            return "/task/status-update";
+
+        }
+
+        taskService.update(task);
+
+        return "redirect:/task/employee/pending-tasks";
+
 
 ////    @PostMapping("/update/{taskId}")
 ////    public String updateTask(@PathVariable("taskId") Long taskId, TaskDTO task) {
@@ -149,4 +147,5 @@ public String updateTask(@ModelAttribute("task") TaskDTO task, BindingResult bin
 ////    }
 //
     }
+}
 
