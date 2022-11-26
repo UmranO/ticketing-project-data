@@ -9,6 +9,7 @@ import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.mapper.TaskMapper;
 import com.cydeo.repository.TaskRepository;
 import com.cydeo.service.TaskService;
+import com.cydeo.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,11 +23,13 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final ProjectMapper projectMapper;
+    private final UserService userService;
 
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper, ProjectMapper projectMapper) {
+    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper, ProjectMapper projectMapper, UserService userService) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
         this.projectMapper = projectMapper;
+        this.userService = userService;
     }
 
     @Override
@@ -109,5 +112,15 @@ public class TaskServiceImpl implements TaskService {
             taskDTO.setTaskStatus(Status.COMPLETE);
             update(taskDTO);
         });
+    }
+
+    @Override
+    public List<TaskDTO> listAllTasksByStatusIsNot(Status status) {
+        return null;
+    }
+
+    @Override
+    public List<TaskDTO> listAllTasksByStatus(Status status) {
+        return null;
     }
 }
