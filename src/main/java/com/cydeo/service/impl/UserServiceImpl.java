@@ -9,6 +9,7 @@ import com.cydeo.repository.UserRepository;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final ProjectService projectService;
     private final TaskService taskService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, ProjectService projectService, TaskService taskService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy ProjectService projectService, @Lazy TaskService taskService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.projectService = projectService;
@@ -52,11 +53,11 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public void deleteByUserName(String username) {
-
-        userRepository.deleteByUserName(username);
-    }
+//    @Override
+//    public void deleteByUserName(String username) {
+//
+//        userRepository.deleteByUserName(username);
+//    }
 
     @Override
     public UserDTO update(UserDTO user) {
@@ -81,6 +82,7 @@ public class UserServiceImpl implements UserService {
 
         if (checkIfUserCanBeDeleted(user)) {
             user.setIsDeleted(true);
+            user.setUserName(user.getUserName() + "-" + user.getId());  // harold@manager.com-2
             userRepository.save(user);
         }
     }
